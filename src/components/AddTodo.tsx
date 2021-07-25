@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
 
   },
   text: {
-    color: "#fff",
+    color: "rgb(255, 255, 255)",
     fontSize: 18,
   },
 });

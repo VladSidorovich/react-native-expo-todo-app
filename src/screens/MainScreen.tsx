@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View, FlatList, Dimensions } from "react-native";
-import { ITodo } from "../../App";
 import { AddTodo } from "../components/AddTodo";
 import { Todo } from "../components/Todo";
+import { ITodo } from "../MainLayout";
 import { THEME } from "../theme";
 
 interface IMainScreen {
@@ -47,7 +47,3 @@ export const MainScreen = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  // style
-});

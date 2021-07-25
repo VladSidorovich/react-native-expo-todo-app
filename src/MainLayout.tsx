@@ -12,7 +12,9 @@ export interface ITodo {
 }
 
 export const MainLayout = () => {
-  const {todos, addTodo, removeTodo, updateTodo} = useContext(TodoContext) as any
+  const { todos, addTodo, removeTodo, updateTodo } = useContext(
+    TodoContext
+  ) as any;
   const [todoId, setTodoId] = useState<string | null>(null);
   // const [todos, setTodos] = useState<ITodo[]>([]);
 

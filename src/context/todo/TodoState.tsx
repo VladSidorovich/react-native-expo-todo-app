@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { ADD_TODO } from "../types";
+import { ADD_TODO, UPDATE_TODO } from "../types";
 import { TodoContext } from "./todoContext";
 import { todoReducer } from "./todoReducer";
 
@@ -10,20 +10,24 @@ export const TodoState = ({ children }: any) => {
 
   const [state, dispatch] = useReducer(todoReducer, initState);
 
-  const addTodo = (title: string) => dispatch({
-    type: ADD_TODO,
-    title
-  })
+  const addTodo = (title: string) =>
+    dispatch({
+      type: ADD_TODO,
+      title,
+    });
 
-  const removeTodo = (id: string) => dispatch({
-    type: ADD_TODO,
-    id
-  })
+  const removeTodo = (id: string) =>
+    dispatch({
+      type: ADD_TODO,
+      id,
+    });
 
-  const updateTodo = (title: string) => dispatch({
-    type: ADD_TODO,
-    title
-  })
+  const updateTodo = (id: string, title: string) =>
+    dispatch({
+      type: UPDATE_TODO,
+      id,
+      title,
+    });
 
   return (
     <TodoContext.Provider
@@ -31,7 +35,7 @@ export const TodoState = ({ children }: any) => {
         todos: state.todos,
         addTodo,
         removeTodo,
-        updateTodo
+        updateTodo,
       }}
     >
       {children}

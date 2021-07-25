@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View, FlatList, Dimensions } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { View, FlatList, Dimensions } from "react-native";
 import { AddTodo } from "../components/AddTodo";
 import { Todo } from "../components/Todo";
+import { ScreenContext } from "../context/screen/screenContext";
+import { TodoContext } from "../context/todo/todoContext";
 import { ITodo } from "../MainLayout";
 import { THEME } from "../theme";
 
@@ -12,12 +14,10 @@ interface IMainScreen {
   openTodo: Function;
 }
 
-export const MainScreen = ({
-  addTodo,
-  removeTodo,
-  todos,
-  openTodo,
-}: IMainScreen) => {
+export const MainScreen = () => {
+  const { addTodo, removeTodo, todos } = useContext(TodoContext);
+  const { changeScreen } = useContext(ScreenContext)
+
   const [deviceWidth, setDeviceWidth] = useState(
     Dimensions.get("window").width - THEME.PADDING_HORIZONTAL * 2
   );
@@ -40,7 +40,7 @@ export const MainScreen = ({
       <FlatList
         data={todos}
         renderItem={({ item }) => (
-          <Todo onOpen={openTodo} todo={item} removeTodo={removeTodo} />
+          <Todo onOpen={changeScreen} todo={item} removeTodo={removeTodo} />
         )}
         keyExtractor={(todo) => todo.id}
       />

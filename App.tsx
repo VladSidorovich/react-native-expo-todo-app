@@ -1,6 +1,7 @@
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
 import React, { useState } from "react";
+import { ScreenState } from "./src/context/screen/screenState";
 import { TodoState } from "./src/context/todo/TodoState";
 import { MainLayout } from "./src/MainLayout";
 
@@ -25,8 +26,10 @@ export default function App() {
   }
 
   return (
-    <TodoState>
-      <MainLayout />
-    </TodoState>
+    <ScreenState>
+      <TodoState>
+        <MainLayout />
+      </TodoState>
+    </ScreenState>
   );
 }

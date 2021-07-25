@@ -2,9 +2,14 @@ import React, { useReducer } from "react";
 import { TodoContext } from "./todoContext";
 import { todoReducer } from "./todoReducer";
 
-export const TodoState = ({ children }) => {
+export const TodoState = ({ children }: any) => {
   const initState = {
-    todos: [],
+    todos: [
+      {
+        id: "1",
+        title: "test",
+      },
+    ],
   };
 
   const [state, dispatch] = useReducer(todoReducer, initState);

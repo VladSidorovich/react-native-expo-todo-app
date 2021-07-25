@@ -12,46 +12,42 @@ export interface ITodo {
 }
 
 export const MainLayout = () => {
-  const todoContext = useContext(TodoContext)
+  const {todos, addTodo, removeTodo, updateTodo} = useContext(TodoContext) as any
   const [todoId, setTodoId] = useState<string | null>(null);
-  const [todos, setTodos] = useState<ITodo[]>([]);
+  // const [todos, setTodos] = useState<ITodo[]>([]);
 
-  const addTodo = (title: string) => {
-    setTodos((prevTodos: ITodo[]) => [
-      ...prevTodos,
-      {
-        id: Date.now().toString(),
-        title,
-      },
-    ]);
-  };
+  // addTodo,
+  // removeTodo,
+  // updateTodo
 
-  const removeTodo = (id: string) => {
-    const selectedTodo = todos.find((todo) => todo.id === id);
+  // const addTodo = (title: string) => addTodo(title);
 
-    Alert.alert(
-      "Удаление элемента",
-      `Вы уверены, что хотите удалить ${selectedTodo?.title}`,
-      [
-        {
-          text: "Отмена",
-          style: "cancel",
-          onPress: () => console.log("Ask me later pressed"),
-        },
-        {
-          text: "Удалить",
-          onPress: () => {
-            setTodos((prev: ITodo[]) => prev.filter((item) => item.id !== id));
-            setTodoId(null);
-          },
-          style: "destructive",
-        },
-      ],
-      {
-        cancelable: false,
-      }
-    );
-  };
+  // const removeTodo = (id: string) => {
+  //   const selectedTodo = todos.find((todo) => todo.id === id);
+
+  //   Alert.alert(
+  //     "Удаление элемента",
+  //     `Вы уверены, что хотите удалить ${selectedTodo?.title}`,
+  //     [
+  //       {
+  //         text: "Отмена",
+  //         style: "cancel",
+  //         onPress: () => console.log("Ask me later pressed"),
+  //       },
+  //       {
+  //         text: "Удалить",
+  //         onPress: () => {
+  //           setTodos((prev: ITodo[]) => prev.filter((item) => item.id !== id));
+  //           setTodoId(null);
+  //         },
+  //         style: "destructive",
+  //       },
+  //     ],
+  //     {
+  //       cancelable: false,
+  //     }
+  //   );
+  // };
 
   const openTodo = (id: string) => {
     setTodoId(id);
@@ -61,20 +57,20 @@ export const MainLayout = () => {
     setTodoId(null);
   };
 
-  const updateTodo = (id: string, title: string) => {
-    setTodos((prev) => {
-      return prev.map((todo) => {
-        if (todo.id === id) {
-          todo.title = title;
-        }
-        return todo;
-      });
-    });
-  };
+  // const updateTodo = (id: string, title: string) => {
+  //   setTodos((prev) => {
+  //     return prev.map((todo) => {
+  //       if (todo.id === id) {
+  //         todo.title = title;
+  //       }
+  //       return todo;
+  //     });
+  //   });
+  // };
 
   let content = (
     <MainScreen
-      todos={todoContext.todos}
+      todos={todos}
       addTodo={addTodo}
       removeTodo={removeTodo}
       openTodo={openTodo}
@@ -82,7 +78,7 @@ export const MainLayout = () => {
   );
 
   if (todoId) {
-    const selectedTodo = todos.find((todo) => todo.id === todoId);
+    const selectedTodo = todos.find((todo: ITodo) => todo.id === todoId);
     content = (
       <TodoScreen
         onSave={updateTodo}

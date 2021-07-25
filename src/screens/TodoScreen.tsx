@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { EditModal } from "../components/EditModal";
 import { AppButton } from "../components/ui/AppButton";
@@ -7,27 +7,28 @@ import { AppTextBold } from "../components/ui/AppTextBold";
 import { THEME } from "../theme";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
 import { ITodo } from "../MainLayout";
+import { ScreenContext } from "../context/screen/screenContext";
+import { TodoContext } from "../context/todo/todoContext";
 
-interface ITodoScreen {
-  goBack: any;
-  onRemove: any;
-  onSave: any;
-  todo: ITodo | undefined;
-}
+export const TodoScreen = () => {
+  const { todos, removeTodo, updateTodo } = useContext(TodoContext) as any;
 
-export const TodoScreen = ({ goBack, todo, onRemove, onSave }: ITodoScreen) => {
+  const { todoId, changeScreen } = useContext(ScreenContext) as any;
+
   const [modal, setModal] = useState(false);
 
   const saveHandler = (title: string) => {
-    onSave(todo?.id, title);
+    updateTodo(todoId, title);
     setModal(false);
   };
+
+  const todo = todos.find((t: ITodo) => t.id === todoId);
 
   return (
     <View>
       <EditModal
         onSave={saveHandler}
-        value={todo?.title}
+        value={todo.title}
         visible={modal}
         onCancel={() => setModal(false)}
       />
@@ -38,16 +39,18 @@ export const TodoScreen = ({ goBack, todo, onRemove, onSave }: ITodoScreen) => {
           <FontAwesome name="edit" size={20} />
         </AppButton>
       </AppCard>
+
       <View style={styles.buttons}>
         <View style={styles.button}>
-          <AppButton color={THEME.GREY_COLOR} onPress={goBack}>
+          <AppButton color={THEME.GREY_COLOR} onPress={() => changeScreen(null)}>
             <AntDesign name="back" size={20} color="rgb(255, 255, 255)" />
           </AppButton>
         </View>
+
         <View style={styles.button}>
           <AppButton
             color={THEME.DANGER_COLOR}
-            onPress={() => onRemove(todo?.id)}
+            onPress={() => removeTodo(todoId)}
           >
             {" "}
             <FontAwesome
